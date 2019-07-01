@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Navigation from "./Navigation";
 
 // Take user input and fetch data
 class SearchForm extends Component {
@@ -41,7 +40,6 @@ class SearchForm extends Component {
 						</svg>
 					</button>
 				</form>
-				<Navigation />
 			</div>
 		);
 	}
