@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-// import { Route } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import "./App.css";
 import Config from "./components/Config";
 import Container from "./components/Container";
@@ -39,24 +39,54 @@ class App extends Component {
 	render() {
 		return (
 			<div className="container">
-				<SearchForm onSearch={this.performSearch} />
-				<Navigation data={this.performSearch} />
-				<div>
-					{this.state.loading ? (
-						<p>Loading...</p>
-					) : (
-						<Container data={this.state.photos} />
-					)}
-				</div>
-
-				{/* <Route exact path="cats" component={this.performSearch("cats")} />
-
-				<Route path="dogs" component={this.performSearch("dogs")} />
-				<Route
-					exact
-					path="computers"
-					component={this.performSearch("computers")}
-				/> */}
+				<BrowserRouter>
+					<div>
+						<SearchForm onSearch={this.performSearch} />
+						<Navigation data={this.performSearch} />
+						<Route
+							exact
+							path="/cats"
+							render={() => (
+								<Container
+									data={this.state.photos}
+									loading={this.state.loading}
+									onLoad={this.performSearch("cats")}
+								/>
+							)}
+						/>
+						<Route
+							path="/dogs"
+							render={() => (
+								<Container
+									data={this.state.photos}
+									loading={this.state.loading}
+									onLoad={this.performSearch("dogs")}
+								/>
+							)}
+						/>
+						<Route
+							path="/computers"
+							render={() => (
+								<Container
+									data={this.state.photos}
+									onLoad={this.performSearch("computers")}
+								/>
+							)}
+						/>
+						<Route
+							exact
+							path="/"
+							performSearch
+							render={() =>
+								this.state.loading ? (
+									<p>Loading...</p>
+								) : (
+									<Container data={this.state.photos} />
+								)
+							}
+						/>
+					</div>
+				</BrowserRouter>
 			</div>
 		);
 	}
