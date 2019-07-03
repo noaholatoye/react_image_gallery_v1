@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Config from "./components/Config";
 import Container from "./components/Container";
@@ -21,9 +21,9 @@ class App extends Component {
 	};
 
 	// Fetch data with Axios
-	componentDidMount() {
-		this.performSearch();
-	}
+	// componentDidMount() {
+	// 	this.performSearch();
+	// }
 
 	// Fetch data with Axios
 	performSearch = query => {
@@ -52,45 +52,48 @@ class App extends Component {
 							onSearchChange={this.onSearchChange}
 						/>
 						<Navigation data={this.performSearch} />
-						<Route
-							path="/"
-							component={() =>
-								this.state.loading ? (
-									<p>Loading...</p>
-								) : (
-									<Container data={this.state.photos} />
-								)
-							}
-						/>
-						<Route
-							path="/cats"
-							render={() => (
-								<Container
-									data={this.state.photos}
-									loading={this.state.loading}
-									onLoad={this.performSearch("cats")}
-								/>
-							)}
-						/>
-						<Route
-							path="/dogs"
-							render={() => (
-								<Container
-									data={this.state.photos}
-									loading={this.state.loading}
-									onLoad={this.performSearch("dogs")}
-								/>
-							)}
-						/>
-						<Route
-							path="/computers"
-							render={() => (
-								<Container
-									data={this.state.photos}
-									onLoad={this.performSearch("computers")}
-								/>
-							)}
-						/>
+						<Switch>
+							<Route
+								exact
+								path="/"
+								component={() =>
+									this.state.loading ? (
+										<p>Loading...</p>
+									) : (
+										<Container data={this.state.photos} />
+									)
+								}
+							/>
+							<Route
+								path="/cats"
+								render={() => (
+									<Container
+										data={this.state.photos}
+										loading={this.state.loading}
+										onLoad={this.performSearch("cats")}
+									/>
+								)}
+							/>
+							<Route
+								path="/dogs"
+								render={() => (
+									<Container
+										data={this.state.photos}
+										loading={this.state.loading}
+										onLoad={this.performSearch("dogs")}
+									/>
+								)}
+							/>
+							<Route
+								path="/computers"
+								render={() => (
+									<Container
+										data={this.state.photos}
+										onLoad={this.performSearch("computers")}
+									/>
+								)}
+							/>
+						</Switch>
 					</div>
 				</BrowserRouter>
 			</div>
