@@ -2,14 +2,6 @@ import React, { Component } from "react";
 
 // Take user input and fetch data
 class SearchForm extends Component {
-	state = {
-		searchText: ""
-	};
-
-	onSearchChange = e => {
-		this.setState({ searchText: e.target.value });
-	};
-
 	handleSubmit = e => {
 		e.preventDefault();
 		this.props.onSearch(this.query.value);
@@ -21,7 +13,7 @@ class SearchForm extends Component {
 				<form className="search-form" onSubmit={this.handleSubmit}>
 					<input
 						type="search"
-						onChange={this.onSearchChange}
+						onChange={this.props.onSearchChange}
 						name="search"
 						ref={input => (this.query = input)}
 						placeholder="Search"

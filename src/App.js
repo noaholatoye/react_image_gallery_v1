@@ -12,9 +12,14 @@ class App extends Component {
 		super(props);
 		this.state = {
 			photos: [],
-			loading: true
+			loading: true,
+			searchText: ""
 		};
 	}
+	onSearchChange = e => {
+		this.setState({ searchText: e.target.value });
+	};
+
 	// Fetch data with Axios
 	componentDidMount() {
 		this.performSearch();
@@ -37,14 +42,27 @@ class App extends Component {
 			});
 	};
 	render() {
+		// console.log(this.state.searchText);
 		return (
 			<div className="container">
 				<BrowserRouter>
 					<div>
-						<SearchForm onSearch={this.performSearch} />
+						<SearchForm
+							onSearch={this.performSearch}
+							onSearchChange={this.onSearchChange}
+						/>
 						<Navigation data={this.performSearch} />
 						<Route
-							exact
+							path="/"
+							component={() =>
+								this.state.loading ? (
+									<p>Loading...</p>
+								) : (
+									<Container data={this.state.photos} />
+								)
+							}
+						/>
+						<Route
 							path="/cats"
 							render={() => (
 								<Container
@@ -72,18 +90,6 @@ class App extends Component {
 									onLoad={this.performSearch("computers")}
 								/>
 							)}
-						/>
-						<Route
-							exact
-							path="/"
-							performSearch
-							render={() =>
-								this.state.loading ? (
-									<p>Loading...</p>
-								) : (
-									<Container data={this.state.photos} />
-								)
-							}
 						/>
 					</div>
 				</BrowserRouter>
