@@ -60,7 +60,10 @@ class App extends Component {
 									this.state.loading ? (
 										<p>Loading...</p>
 									) : (
-										<Container data={this.state.photos} />
+										<Container
+											data={this.state.photos}
+											onLoad={this.performSearch}
+										/>
 									)
 								}
 							/>
